@@ -14,11 +14,41 @@ $ npm start
 $ npm stop
 ```
 
-### npm scripts
+#### 数据库查询语句
+```javascript
+// 本地用sql语句查询
+1、查询所有数据
+const DataTableName = require('../../config/dbname')
+this.app.mysql.select(DataTableName.USER_TABLE)
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+2、条件查询
+this.app.mysql.selert(DateTableName.USER_TABLE, {
+  where: {id: 2}
+})；
+
+this.app.mysql.get(DateTableName.USER_TABLE, {
+  where: {id: 2}
+})
+
+3、分页查询并排序（先条件查询在分页排序）
+this.app.mysql.select(dataTableName.USER_TABLE, {
+  where: { id: 2 },
+  columns: ['author', 'title'], // 要查询的表字段
+  orders: [['cTime', 'desc'], [......]], // 排序方式
+  limit: 10, // 返回数据量
+  offset: 0, // 数据偏移量
+})
+
+4、删除数据
+this.app.mysql.delete(dataTableName.USER_TABLE, { id })
 
 
-[egg]: https://eggjs.org
+5、增加数据
+this.app.mysql.insert(dataTableName.USER_TABLE,{username:"lisi",password:"1234"}) // body
+
+6、更新数据
+let result = await this.app.mysql.update(dataTableName.USER_TABLE,{ id:2, username:'赵四' });
+//修改数据的第二种方式：通过 sql 来修改数据
+let results=await this.app.mysql.query('update user set username = ? where id = ?',["王五",2]);
+
+```

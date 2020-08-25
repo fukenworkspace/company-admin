@@ -1,23 +1,29 @@
 'use strict'
 
 const Service = require('egg').Service
-const DataTableName = require('../../config/datatablename')
+const DataTableName = require('../../config/dbname')
 
 class UserService extends Service {
+  /**
+   * @Login
+   */
+  userlogin(username, password) {
+    const token = this.app.jwt.sign({
+      username, password
+    }, this.app.config.jwt.secret,
+      {
+        // 设置过期时间
+        expiresIn: 7200
+      })
+    return token
+  }
   /**
    * @查询数据
    */
   async getAll() {
     // 查询没有条件
     return await this.app.mysql.select(DataTableName.USER_TABLE)
-    //  查询有条件
-    // return await this.app.mysql.select(dataTableName.USER_TABLE, {
-    //   where: { id: 2 },
-    //   columns: ['author', 'title'], // 要查询的表字段
-    //   orders: [['created_at', 'desc'], ['id', 'desc']], // 排序方式
-    //   limit: 10, // 返回数据量
-    //   offset: 0, // 数据偏移量
-    // })
+
   }
   /**
    * @保存数据

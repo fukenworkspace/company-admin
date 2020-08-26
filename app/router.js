@@ -19,6 +19,11 @@ module.exports = app => {
    */
   router.get(apiVersion + '/login/:username/:password', controller.user.login)
 
+  /**
+   * 模糊查询用户信息表
+   */
+  router.get(apiVersion + '/searchUser', controller.user.searchUsers)
+
 };
 
 

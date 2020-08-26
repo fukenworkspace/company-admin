@@ -9,6 +9,7 @@ class UserController extends CommonController {
     this.entity = DataTableName.USER_TABLE
   }
   /**
+   * @DeleteMapping
    * @删除用户
    */
   async deleteUser() {
@@ -29,11 +30,23 @@ class UserController extends CommonController {
     }
   }
 
+  /**
+   * @GetMapping
+   */
   async login() {
     const { ctx, service } = this
     const username = ctx.params.username
     const password = ctx.params.password
     ctx.body = await service.user.userlogin(username, password)
+  }
+
+  /**@GetMapping
+   * 模糊查询用户
+   */
+  async searchUsers() {
+    const { ctx, service } = this
+    const username = ctx.query.username
+    ctx.body =  await service.user.search(username)
   }
 }
 module.exports = UserController

@@ -62,6 +62,6 @@ async query( auth ) {
 8、连表查询
 
 (1)关联表查询（查询评价表，关联用户表头像和昵称）
-select evaluate.*, user.name, user.figureurl from evaluate 
+select evaluate.*, user.name, user.figureurl from evaluate
 left join user on evaluate.userId = user.id where cId = 123
 ```

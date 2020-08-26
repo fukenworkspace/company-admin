@@ -22,34 +22,16 @@ class UserService extends CommonService {
       })
     return token
   }
-  /**
-   * @查询数据
-   */
-  async getAll() {
-    // 查询没有条件
-    return await this.app.mysql.select(DataTableName.USER_TABLE)
 
-  }
   /**
-   * @保存数据
-   * @param {} data
+   * 模糊查询
    */
-  async save(data) {
-    const userInfo = {
-      username: data.username,
-      phone: data.phone,
-      address: data.address
-    }
-    return await this.app.mysql.insert(DataTableName.USER_TABLE, userInfo)
-  }
-  /**
-   * @数据库查询删除记录
-   * @param {*} id
-   */
-  async deleteOne(id) {
-    return await this.app.mysql.delete(DataTableName.USER_TABLE, {
-      id
-    })
+  async search(username) {
+    const { app: { mysql } } = this
+    const sql = `SELECT * FROM ${DataTableName.USER_TABLE} WHERE username LIKE "%${username}%"`
+    const list = await mysql.query(sql)
+    const total = list.length
+    return { list, total }
   }
 }
 

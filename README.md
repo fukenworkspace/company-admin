@@ -51,4 +51,17 @@ let result = await this.app.mysql.update(dataTableName.USER_TABLE,{ id:2, userna
 //修改数据的第二种方式：通过 sql 来修改数据
 let results=await this.app.mysql.query('update user set username = ? where id = ?',["王五",2]);
 
+7、模糊查询
+async query( auth ) {
+        const TABLE_NAME = 'auth';
+        const QUERY_STR = 'id, authName, authValue, createTime, updateTime';
+        let sql = `select ${QUERY_STR} from ${TABLE_NAME} where authName like "%${auth.authName}%"`;
+        const row = await this.app.mysql.query(sql);
+        return row;
+    }
+8、连表查询
+
+(1)关联表查询（查询评价表，关联用户表头像和昵称）
+select evaluate.*, user.name, user.figureurl from evaluate 
+left join user on evaluate.userId = user.id where cId = 123
 ```

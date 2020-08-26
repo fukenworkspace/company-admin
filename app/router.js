@@ -6,9 +6,10 @@
 const apiVersion = '/api/v1'
 
 module.exports = app => {
-  const { router, controller, jwt  } = app;
-  router.get('/', controller.home.index);
+  const { router, controller, jwt } = app
 
+  // restfull
+  router.resources('user', apiVersion + '/user', controller.user)
   /**
    * @删除用户信息需要token检测
   */
@@ -17,6 +18,7 @@ module.exports = app => {
    * @用户登录
    */
   router.get(apiVersion + '/login/:username/:password', controller.user.login)
+
 };
 
 

@@ -1,24 +1,13 @@
 'use strict'
 
-const Controller = require('egg').Controller
+const CommonController = require('./common')
+const DataTableName = require('../../config/dbname')
 
-class UserController extends Controller {
-  // 查询获取所有数据
-  async index() {
-    const { ctx } = this
-    ctx.body = await this.service.user.getAll()
+class UserController extends CommonController {
+  constructor(...args) {
+    super(...args)
+    this.entity = DataTableName.USER_TABLE
   }
-  async new() {
-    const { ctx } = this
-    ctx.body = '删除了'
-  }
-  async create() {
-    const { ctx } = this
-    const body = ctx.request.body
-    const data = await this.service.user.save(body)
-    ctx.body = data
-  }
-
   /**
    * @删除用户
    */
@@ -41,13 +30,12 @@ class UserController extends Controller {
   }
 
   async login() {
-    const { ctx } = this
+    const { ctx, service } = this
     const username = ctx.params.username
     const password = ctx.params.password
-    ctx.body = await this.service.user.userlogin(username, password)
+    ctx.body = await service.user.userlogin(username, password)
   }
 }
-
 module.exports = UserController
 
 

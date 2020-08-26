@@ -1,12 +1,17 @@
 'use strict'
 
-const Service = require('egg').Service
+const CommonService = require('./common-service')
 const DataTableName = require('../../config/dbname')
 
-class UserService extends Service {
+class UserService extends CommonService {
+
+  constructor(...args) {
+    super(...args)
+    this.entity = DataTableName.USER_TABLE
+  }
   /**
-   * @Login
-   */
+ * @Login
+ */
   userlogin(username, password) {
     const token = this.app.jwt.sign({
       username, password

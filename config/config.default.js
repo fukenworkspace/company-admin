@@ -64,7 +64,39 @@ module.exports = appInfo => {
     jsonLimit: '100mb',
     formLimit: '100mb',
   }
-
+  /**
+   * @Swagger2
+   */
+  config.swagger2 = {
+    enable: true, // http://127.0.0.1:7001/public/swagger/index.html
+    base: {
+      schemes: [
+        'http', 'https'
+      ],
+      host: '127.0.0.1:7001',
+      basePath: '/',
+      consumes: [
+        'application/json',
+      ],
+      produces: [
+        'application/json',
+      ],
+      info: {
+        description: '企业后台管理品台',
+        version: '1.0.0',
+        title: 'admin',
+        contact: {
+          email: 'shichaoxin@qq.com',
+        }
+      },
+      definitions: {
+        // model definitions
+      },
+      securityDefinitions: {
+        // security definitions
+      }
+    },
+  }
   return {
     ...config,
     ...userConfig,

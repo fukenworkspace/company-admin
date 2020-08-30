@@ -6,7 +6,7 @@
 const apiVersion = '/api/v1'
 
 module.exports = app => {
-  const { router, controller, jwt } = app
+  const { router, controller, jwt, swagger } = app
 
   // restfull
   router.resources('user', apiVersion + '/user', controller.user)
@@ -14,15 +14,37 @@ module.exports = app => {
    * @删除用户信息需要token检测
   */
   router.delete(apiVersion + '/deleteUser/:id', jwt, controller.user.deleteUser)
-  /**
-   * @用户登录
-   */
-  router.get(apiVersion + '/login/:username/:password', controller.user.login)
 
   /**
    * 模糊查询用户信息表
    */
   router.get(apiVersion + '/searchUser', controller.user.searchUsers)
+  /**
+ * @用户登录
+ */
+  router.get(apiVersion + '/login/:username/:password', controller.user.login)
+  swagger.get(apiVersion + '/login/{username}/{password}', {
+    tags: [
+      '用户信息类',
+    ],
+    summary: '用户登录',
+    description: '',
+    parameters: [
+      {
+        in: 'params',
+        name: 'username',
+        description: '用户名',
+        required: true,
+      },
+      {
+        in: 'params',
+        name: 'password',
+        description: '密码',
+        required: true,
+      },
+    ],
+    responses: {},
+  });
 
 };
 

@@ -19,5 +19,12 @@ module.exports = {
   jwt: {
     enable: true,
     package: 'egg-jwt'
+  },
+  /**
+   * @swagger
+   */
+  swagger2: {
+    enable: true,
+    package: 'egg-swagger2'
   }
 };
